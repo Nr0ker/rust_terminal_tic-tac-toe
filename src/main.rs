@@ -4,93 +4,88 @@ use std::collections::HashMap;
 
 fn main() {
 
-    let mut place1_1= String::from(' ');
-    let mut place1_2= String::from(' ');
-    let mut place1_3= String::from(' ');
-    let mut place2_1= String::from(' ');
-    let mut place2_2= String::from(' ');
-    let mut place2_3= String::from(' ');
-    let mut place3_1= String::from(' ');
-    let mut place3_2= String::from(' ');
-    let mut place3_3= String::from(' ');
-    
-    let mut field_places = vec!["1","2","3","4","5","6","7","8","9"];
+    let allowed_characters = ["x", "o"];
 
-    let allowed_characters = ["x", "y"];
+    let mut taken_field_places: HashMap<String, String> = HashMap::from([
+        ("1".to_string(), " ".to_string()),
+        ("2".to_string(), " ".to_string()),
+        ("3".to_string(), " ".to_string()),
+        ("4".to_string(), " ".to_string()),
+        ("5".to_string(), " ".to_string()),
+        ("6".to_string(), " ".to_string()),
+        ("7".to_string(), " ".to_string()),
+        ("8".to_string(), " ".to_string()),
+        ("9".to_string(), " ".to_string()),
+    ]);
 
-    // let mut taken_field_places = HashMap::from([
-    //     ("1_1", 0),
-    //     ("1_2", 0),
-    //     ("1_3", 0),
-    //     ("2_1", 0),
-    //     ("2_2", 0),
-    //     ("2_3", 0),
-    //     ("3_1", 0),
-    //     ("3_2", 0),
-    //     ("3_3", 0),
-    // ]);
+    // let mut taken_field_places: HashMap<String, String> = HashMap::new()
 
-    let mut taken_field_places: HashMap<String, String> = HashMap::new();
 
-    let mut place_choice = String::new();
-    let mut character = String::new();
+
+    let mut loop_count: i8 = 0;
 
     loop{
-    
+        let mut place_choice = String::new();
+        let mut character = String::new();
+
+        loop_count += 1;
+
+        if loop_count == 1{
+
+            println!("Welcome to the tic-tac-toe in terminal! 
+            \n The count of the field goes like this> | 1 | 2 | 3 |
+                                        | 4 | 5 | 6 |
+                                        | 7 | 8 | 9 |")
+
+        }
+
         println!("Where do you want to place first>");
         io::stdin() 
             .read_line(&mut place_choice)
             .expect("Failed to read line");
-        println!("{}", place_choice);
+        place_choice = place_choice.trim().to_string();
+
+
         println!("What character? Allowed characters in this game {:?}", allowed_characters);
-        
         io::stdin()
             .read_line(&mut character)
             .expect("Failed to read line");
+        character = character.trim().to_string();
+        
 
-
-            
-        // let place = read_char();
-        if place_choice.trim() == "1"{
-            place_choice = String::from("1_1");
-            println!("{}", place_choice);
-        }
-  
         taken_field_places.insert(place_choice, character);
-        println!("{:?}", taken_field_places);
             
-       // todo Hashmap paramether into the function so it can render the map
-
-
-        render(place1_1, place1_2, place1_3, place2_1, place2_2, place2_3, place3_1, place3_2, place3_3);
-
-    
-        break;
+        render2(&taken_field_places);
+        
     }
 
     
 }
-// todo: this must be a tic-tac-toe game in terminal
 
-fn render(place1_1:String, place1_2:String, place1_3:String, place2_1:String,
-     place2_2:String, place2_3:String, place3_1:String, place3_2:String, place3_3:String){
 
-        
-    println!("\n              | {} | {} | {} |
-              | {} | {} | {} | 
-              | {} | {} | {} |\n", place1_1, place1_2, place1_3, place2_1, place2_2, place2_3, place3_1, place3_2, place3_3);
+fn render2(map: &HashMap<String, String>){
+    // let output = String::new();
+
+    // let mut k = String::from("1");
+
+    // for (place, value) in map.iter() {
+
+    //     if map.contains_key(&k){
+            
+    //         // println!( println!("\n              | {} | {} | {} |
+    //         //   | {} | {} | {} | 
+    //         //   | {} | {} | {} |\n");)
+    //     }
+    //     k = (map.len() + 1).to_string();
+
+    // }
+
+
+     println!("\n    | {} | {} | {} |
+    | {} | {} | {} | 
+    | {} | {} | {} |\n",
+             map["1"], map["2"], map["3"], map["4"], map["5"], map["6"], map["7"], map["8"], map["9"]);
+
 }
 
-// fn read_char() -> char {
-//     let mut input = String::new();
-
-//     // Flush stdout so the prompt appears before input
-//     io::stdout()
-//     .flush().unwrap(); // flush() immediate output with no lane buffering \n // unwrap is like .read_line().expect
-
-//     io::stdin()
-//     .read_line(&mut input).expect("Failed to read line");
-
-//     input.trim()
-//     .chars().next().expect("No character entered")
-// }
+// TODO: make a win and a lose condition 
